@@ -259,8 +259,6 @@ public class RoleController_CubeOK : MonoBehaviour
                 }
                 AnchorSort();
             }
-
-            #endregion
             Aresult.Clear();
             Aname.Clear();
             dic.Clear();
