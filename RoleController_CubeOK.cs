@@ -46,8 +46,6 @@ public class RoleController_CubeOK : MonoBehaviour
     public float Minjizhan = 6;//设置接收的最小基站数量
     public int cubeturn = 2;
 
-
-
     void Start()
     {
         InitInfo();
@@ -72,10 +70,6 @@ public class RoleController_CubeOK : MonoBehaviour
         int j = 0;
         int k = 0;
 
-        //Ray ray = new Ray(transform.position, Vector3.down);
-        //RaycastHit hit;
-
-        Debug.Log("{{{{{{ " + end);
         if (end)
         {
             result++;
@@ -121,14 +115,9 @@ public class RoleController_CubeOK : MonoBehaviour
                 }
 
                 transform.position = originpos1;
-                //pos.z = originpos.z - i - 100;
-                //pos.y = 10.0f;
                 if (k >= kuang1)
                 {
-
-                    //Debug.Log("KKKKKKKK" + j);
                     pos.z = originpos.z - i-100;
-                    //Debug.Log("ZZZZZZZZ" + pos);
                     transform.position = new Vector3(originpos1.x, 10.0f, pos.z);
                     k = 0;
                 }
@@ -141,7 +130,7 @@ public class RoleController_CubeOK : MonoBehaviour
                         pos.z = originpos.z - i - 100;
                         Ray ray = new Ray(transform.position, Vector3.down);//向下发射射线控制距离地面高度
                         RaycastHit hit;
-                        //Debug.Log("XXXXXX" + pos);
+                        
                         if (Physics.Raycast(ray, out hit))
                         {
                             targetheight = hit.point.y + distance;
@@ -175,15 +164,6 @@ public class RoleController_CubeOK : MonoBehaviour
         {
             AnchorNum();
             AnameNum();
-            //SceneManager.LoadScene(0);
-
-            //StartCoroutine(ChangPos());
-            //GetChilds();
-            //if (end == true)
-            //{
-            //    AnchorNum();
-            //    AnameNum();
-            //}
         }
 
     }
@@ -191,7 +171,6 @@ public class RoleController_CubeOK : MonoBehaviour
     void GetChilds()//计算Anchor的可用度
     {
         count = baseobj.transform.childCount;
-        //Debug.Log("$$$$:" + count);
         childpos = new Transform[count];
         if (isStart)
         {
@@ -213,41 +192,6 @@ public class RoleController_CubeOK : MonoBehaviour
                 }
             }
             Aresult.Add(num1);
-            //Debug.Log("$$$$33333:" + num1);
-            tt.text += "\n100米包含Anchor数量:" + num.ToString() + "\n";
-            tt.text += "无遮挡Anchor数量:" + num1.ToString() + "\n";
-            tt.text += "有遮挡的Anchor数量:" + (num - num1).ToString();
-            WritePos();
-            isStart = false;
-        }
-    }
-
-    void GetChild(int snum)//计算Anchor的可用度
-    {
-        count = snum;
-        //Debug.Log("$$$$:" + count);
-        childpos = new Transform[count];
-        if (isStart)
-        {
-            for (int i = 0; i < count; i++)
-            {
-                if (!baseobj.transform.GetChild(i).gameObject.GetComponent<LineRenderer>())
-                {
-                    baseobj.transform.GetChild(i).gameObject.AddComponent<LineRenderer>();
-                }
-                childpos[i] = baseobj.transform.GetChild(i).transform;
-            }
-            for (int j = 0; j < count; j++)
-            {
-                if (Vector3.Distance(transform.position, childpos[j].position) <= 100f)
-                {
-                    num++;
-                    OnViewXian(childpos[j]);
-                    tt.text += "Anchor:" + childpos[j].name + "\t\t";
-                }
-            }
-            Aresult.Add(num1);
-            //Debug.Log("$$$$33333:" + num1);
             tt.text += "\n100米包含Anchor数量:" + num.ToString() + "\n";
             tt.text += "无遮挡Anchor数量:" + num1.ToString() + "\n";
             tt.text += "有遮挡的Anchor数量:" + (num - num1).ToString();
@@ -273,7 +217,6 @@ public class RoleController_CubeOK : MonoBehaviour
         if (iscollider && hit.collider.tag == "JiZhan")
         {
             num1++;
-            // Debug.Log("@@@@@@@:" + num1);
             tt.text += "无遮挡Anchor:" + pos.name + "\t";
             Debug.DrawLine(pos.position, transform.position, Color.green);
             pos.gameObject.GetComponent<LineRenderer>().material = material;
@@ -309,7 +252,6 @@ public class RoleController_CubeOK : MonoBehaviour
 
                         else
                         {
-                            //tt.text = "全场每个Anchor的出现数量：" + Aname[i] + "——" + (countn + 1);
                             dic.Add(Aname[i], (countn + 1));
                             countn = 0;
                         }
@@ -318,34 +260,6 @@ public class RoleController_CubeOK : MonoBehaviour
                 AnchorSort();
             }
 
-            #region
-            //foreach (string item in Aname)
-            //{
-            //    for (int i = 0; i < Aname.Count; i++)
-            //    {
-            //        if (Aname[i].Equals(item))
-            //        {
-            //            countn++;
-            //            Debug.Log("99999999：" + countn);
-
-            //        }
-            //        else
-            //        {
-            //            Debug.Log("10101010：" + item + ":" + countn);
-            //            tt.text = "全场每个Anchor的出现数量：" + item + "——" + countn;
-            //            countn = 0;
-            //            WritePos();
-            //            break;
-            //        }
-            //if (i == Aname.Count - 1)
-            //{
-            //    Debug.Log("10101010：" + item + ":" + countn);
-            //    tt.text = "全场每个Anchor的出现数量：" + item + "——" + countn;
-            //    WritePos();
-            //}
-            //        }
-            //    }
-            //}
             #endregion
             Aresult.Clear();
             Aname.Clear();
@@ -376,10 +290,8 @@ public class RoleController_CubeOK : MonoBehaviour
         foreach (KeyValuePair<string, int> item in dicsort)
         {
             index++;
-           // Debug.Log("@@@@ " + index);
             if (index <= 50)
             {
-               // Debug.Log("#### " + index);
                 tt.text = "全场每个Anchor的出现数量：" + item.Key + ":" + item.Value;
             }
             if (index > 50)
@@ -393,7 +305,6 @@ public class RoleController_CubeOK : MonoBehaviour
                     tt.text = "全场每个Anchor的出现数量：" + item.Key + ":" + item.Value;
                 }
                 GameObject obj = baseobj.transform.Find(item.Key).gameObject;
-                //obj.SetActive(false);
                 Destroy(obj);
             }
             WritePos();
@@ -412,7 +323,6 @@ public class RoleController_CubeOK : MonoBehaviour
                     a++;
                 }
             }
-            // Debug.Log("^^^^^" + tt.text);
             tt.text = "全场无遮挡小于6的Anchor：" + a;
             WritePos();
             Isanchor1 = true;
@@ -441,7 +351,6 @@ public class RoleController_CubeOK : MonoBehaviour
         }
         else
         {
-            //StreamWriter sw1 = new StreamWriter(fildAddress);//覆盖文档
             StreamWriter sw = File.AppendText(fildAddress);//追加新的内容在文件后而非覆盖
             string w = "\n" + tt.text;
             sw.Write(w);
